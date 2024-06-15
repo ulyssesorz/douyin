@@ -1,0 +1,33 @@
+syntax = "proto3";
+option go_package = "favorite";
+package favorite;
+
+import "video.proto";
+
+// 点赞
+message FavoriteActionRequest {
+    string token = 1;
+    int64 user_id = 2;
+    int64 video_id = 3;
+    int32 action_type = 4;
+}
+message FavoriteActionResponse {
+    int32 status_code = 1;
+    string status_msg = 2;
+}
+
+message FavoriteListRequest {
+    string token = 1;
+    int64 user_id = 2;
+}
+
+message FavoriteListResponse {
+    int32 status_code = 1;
+    string status_msg = 2;
+    repeated video.Video video_list = 3;  
+}
+
+service FavoriteService {
+    rpc FavoriteAction (FavoriteActionRequest) returns (FavoriteActionResponse);
+    rpc FavoriteList (FavoriteListRequest) returns (FavoriteListResponse);
+  }
