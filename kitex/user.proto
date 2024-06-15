@@ -1,0 +1,59 @@
+syntax = "proto3";
+option go_package = "user";
+package user;
+
+// 注册
+message UserRegisterRequest {
+    string username = 1;
+    string password = 2;
+}
+message UserRegisterResponse {
+    int32 status_code = 1;
+    string status_msg = 2;
+    int64 user_id = 3;
+    string token = 4;
+}
+
+// 登录
+message UserLoginRequest {
+    string username = 1;
+    string password = 2;
+}
+message UserLoginResponse {
+    int32 status_code = 1;
+    string status_msg = 2;
+    int64 user_id = 3;
+    string token = 4;
+}
+
+// 用户
+message User {
+    int64 id = 1;
+    string name = 2;
+    int64 follow_count = 3;     //关注数
+    int64 follower_count = 4;   //粉丝数
+    bool is_follow = 5;
+    string avatar = 6;
+    string background_image = 7;
+    string signature = 8;
+    int64 total_favorited = 9;  //总获赞数
+    int64 favorite_count = 10;  //总点赞数
+    int64 work_count = 11;
+}
+
+message UserInfoRequest {
+    int64 user_id = 1;
+    string token = 2;
+}
+
+message UserInfoResponse {
+    int32 status_code = 1;
+    string status_msg = 2;
+    User user = 3;
+}
+
+service UserService {
+    rpc Register(UserRegisterRequest) returns (UserLoginResponse) {}
+    rpc Login(UserLoginRequest) returns (UserLoginResponse) {}
+    rpc UserInfo(UserInfoRequest) returns (UserInfoResponse) {}
+}
