@@ -24,8 +24,9 @@ message MessageChatResponse {
 
 message MessageActionRequest {
     string token = 1;
-    string to_user_id = 2;
-    string content = 3;
+    int64 to_user_id = 2;
+    int32 action_type = 3;
+    string content = 4;
 }
 message MessageActionResponse {
     int32 status_code = 1;

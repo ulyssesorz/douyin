@@ -189,6 +189,11 @@ func (x *MessageActionRequest) FastRead(buf []byte, _type int8, number int32) (o
 		if err != nil {
 			goto ReadFieldError
 		}
+	case 4:
+		offset, err = x.fastReadField4(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
 	default:
 		offset, err = fastpb.Skip(buf, _type, number)
 		if err != nil {
@@ -208,11 +213,16 @@ func (x *MessageActionRequest) fastReadField1(buf []byte, _type int8) (offset in
 }
 
 func (x *MessageActionRequest) fastReadField2(buf []byte, _type int8) (offset int, err error) {
-	x.ToUserId, offset, err = fastpb.ReadString(buf, _type)
+	x.ToUserId, offset, err = fastpb.ReadInt64(buf, _type)
 	return offset, err
 }
 
 func (x *MessageActionRequest) fastReadField3(buf []byte, _type int8) (offset int, err error) {
+	x.ActionType, offset, err = fastpb.ReadInt32(buf, _type)
+	return offset, err
+}
+
+func (x *MessageActionRequest) fastReadField4(buf []byte, _type int8) (offset int, err error) {
 	x.Content, offset, err = fastpb.ReadString(buf, _type)
 	return offset, err
 }
@@ -381,6 +391,7 @@ func (x *MessageActionRequest) FastWrite(buf []byte) (offset int) {
 	offset += x.fastWriteField1(buf[offset:])
 	offset += x.fastWriteField2(buf[offset:])
 	offset += x.fastWriteField3(buf[offset:])
+	offset += x.fastWriteField4(buf[offset:])
 	return offset
 }
 
@@ -393,18 +404,26 @@ func (x *MessageActionRequest) fastWriteField1(buf []byte) (offset int) {
 }
 
 func (x *MessageActionRequest) fastWriteField2(buf []byte) (offset int) {
-	if x.ToUserId == "" {
+	if x.ToUserId == 0 {
 		return offset
 	}
-	offset += fastpb.WriteString(buf[offset:], 2, x.GetToUserId())
+	offset += fastpb.WriteInt64(buf[offset:], 2, x.GetToUserId())
 	return offset
 }
 
 func (x *MessageActionRequest) fastWriteField3(buf []byte) (offset int) {
+	if x.ActionType == 0 {
+		return offset
+	}
+	offset += fastpb.WriteInt32(buf[offset:], 3, x.GetActionType())
+	return offset
+}
+
+func (x *MessageActionRequest) fastWriteField4(buf []byte) (offset int) {
 	if x.Content == "" {
 		return offset
 	}
-	offset += fastpb.WriteString(buf[offset:], 3, x.GetContent())
+	offset += fastpb.WriteString(buf[offset:], 4, x.GetContent())
 	return offset
 }
 
@@ -562,6 +581,7 @@ func (x *MessageActionRequest) Size() (n int) {
 	n += x.sizeField1()
 	n += x.sizeField2()
 	n += x.sizeField3()
+	n += x.sizeField4()
 	return n
 }
 
@@ -574,18 +594,26 @@ func (x *MessageActionRequest) sizeField1() (n int) {
 }
 
 func (x *MessageActionRequest) sizeField2() (n int) {
-	if x.ToUserId == "" {
+	if x.ToUserId == 0 {
 		return n
 	}
-	n += fastpb.SizeString(2, x.GetToUserId())
+	n += fastpb.SizeInt64(2, x.GetToUserId())
 	return n
 }
 
 func (x *MessageActionRequest) sizeField3() (n int) {
+	if x.ActionType == 0 {
+		return n
+	}
+	n += fastpb.SizeInt32(3, x.GetActionType())
+	return n
+}
+
+func (x *MessageActionRequest) sizeField4() (n int) {
 	if x.Content == "" {
 		return n
 	}
-	n += fastpb.SizeString(3, x.GetContent())
+	n += fastpb.SizeString(4, x.GetContent())
 	return n
 }
 
@@ -637,7 +665,8 @@ var fieldIDToName_MessageChatResponse = map[int32]string{
 var fieldIDToName_MessageActionRequest = map[int32]string{
 	1: "Token",
 	2: "ToUserId",
-	3: "Content",
+	3: "ActionType",
+	4: "Content",
 }
 
 var fieldIDToName_MessageActionResponse = map[int32]string{

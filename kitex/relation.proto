@@ -15,6 +15,17 @@ message RelationActionResponse {
     string status_msg = 2; 
 }
 
+// 关注列表
+message RelationFollowListRequest {
+    int64 user_id = 1;
+    string token = 2;
+  }
+  message RelationFollowListResponse {
+    int32 status_code = 1;
+    string status_msg = 2;
+    repeated user.User user_list = 3;
+  }
+
 // 粉丝列表
 message RelationFollowerListRequest {
     string token = 1;
@@ -53,7 +64,7 @@ message RelationFriendListRequest {
 message RelationFriendListResponse {
     int32 status_code = 1;
     string status_msg = 2; 
-    repeated user.User user_list = 3; 
+    repeated FriendUser user_list = 3; 
 }
 
 service RelationService {
