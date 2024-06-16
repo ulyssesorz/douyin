@@ -53,7 +53,7 @@ message UserInfoResponse {
 }
 
 service UserService {
-    rpc Register(UserRegisterRequest) returns (UserLoginResponse) {}
+    rpc Register(UserRegisterRequest) returns (UserRegisterResponse) {}
     rpc Login(UserLoginRequest) returns (UserLoginResponse) {}
     rpc UserInfo(UserInfoRequest) returns (UserInfoResponse) {}
 }

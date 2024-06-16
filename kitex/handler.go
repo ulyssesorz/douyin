@@ -6,6 +6,7 @@ import (
 	video "github.com/ulyssesorz/douyin/kitex/kitex_gen/video"
 	message "github.com/ulyssesorz/douyin/kitex/kitex_gen/message"
 	favorite "github.com/ulyssesorz/douyin/kitex/kitex_gen/favorite"
+	relation "github.com/ulyssesorz/douyin/kitex/kitex_gen/relation"
 	comment "github.com/ulyssesorz/douyin/kitex/kitex_gen/comment"
 )
 
@@ -13,7 +14,7 @@ import (
 type UserServiceImpl struct{}
 
 // Register implements the UserServiceImpl interface.
-func (s *UserServiceImpl) Register(ctx context.Context, req *user.UserRegisterRequest) (resp *user.UserLoginResponse, err error) {
+func (s *UserServiceImpl) Register(ctx context.Context, req *user.UserRegisterRequest) (resp *user.UserRegisterResponse, err error) {
 	// TODO: Your code here...
 	return
 }
@@ -38,6 +39,30 @@ func (s *CommentServiceImpl) CommentAction(ctx context.Context, req *comment.Com
 
 // CommentList implements the CommentServiceImpl interface.
 func (s *CommentServiceImpl) CommentList(ctx context.Context, req *comment.CommentListRequest) (resp *comment.CommentListResponse, err error) {
+	// TODO: Your code here...
+	return
+}
+
+// RelationAction implements the RelationServiceImpl interface.
+func (s *RelationServiceImpl) RelationAction(ctx context.Context, req *relation.RelationActionRequest) (resp *relation.RelationActionResponse, err error) {
+	// TODO: Your code here...
+	return
+}
+
+// RelationFollowList implements the RelationServiceImpl interface.
+func (s *RelationServiceImpl) RelationFollowList(ctx context.Context, req *relation.RelationFollowListRequest) (resp *relation.RelationFollowListResponse, err error) {
+	// TODO: Your code here...
+	return
+}
+
+// RelationFollowerList implements the RelationServiceImpl interface.
+func (s *RelationServiceImpl) RelationFollowerList(ctx context.Context, req *relation.RelationFollowerListRequest) (resp *relation.RelationFollowerListResponse, err error) {
+	// TODO: Your code here...
+	return
+}
+
+// RelationFriendList implements the RelationServiceImpl interface.
+func (s *RelationServiceImpl) RelationFriendList(ctx context.Context, req *relation.RelationFriendListRequest) (resp *relation.RelationFriendListResponse, err error) {
 	// TODO: Your code here...
 	return
 }
