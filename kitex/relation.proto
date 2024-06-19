@@ -53,7 +53,7 @@ message FriendUser {
 
     // 好友列表要外显最近一条消息
     string message = 12;
-    int32 message_typ = 13;
+    int64 msgType = 13;
 }
 
 // 好友（互关）列表

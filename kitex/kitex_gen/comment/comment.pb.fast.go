@@ -59,7 +59,7 @@ ReadFieldError:
 }
 
 func (x *Comment) fastReadField1(buf []byte, _type int8) (offset int, err error) {
-	x.CommentId, offset, err = fastpb.ReadInt64(buf, _type)
+	x.Id, offset, err = fastpb.ReadInt64(buf, _type)
 	return offset, err
 }
 
@@ -79,7 +79,7 @@ func (x *Comment) fastReadField3(buf []byte, _type int8) (offset int, err error)
 }
 
 func (x *Comment) fastReadField4(buf []byte, _type int8) (offset int, err error) {
-	x.CreateTime, offset, err = fastpb.ReadInt64(buf, _type)
+	x.CreateDate, offset, err = fastpb.ReadString(buf, _type)
 	return offset, err
 }
 
@@ -307,10 +307,10 @@ func (x *Comment) FastWrite(buf []byte) (offset int) {
 }
 
 func (x *Comment) fastWriteField1(buf []byte) (offset int) {
-	if x.CommentId == 0 {
+	if x.Id == 0 {
 		return offset
 	}
-	offset += fastpb.WriteInt64(buf[offset:], 1, x.GetCommentId())
+	offset += fastpb.WriteInt64(buf[offset:], 1, x.Id)
 	return offset
 }
 
@@ -318,7 +318,7 @@ func (x *Comment) fastWriteField2(buf []byte) (offset int) {
 	if x.User == nil {
 		return offset
 	}
-	offset += fastpb.WriteMessage(buf[offset:], 2, x.GetUser())
+	offset += fastpb.WriteMessage(buf[offset:], 2, x.User)
 	return offset
 }
 
@@ -326,15 +326,15 @@ func (x *Comment) fastWriteField3(buf []byte) (offset int) {
 	if x.Content == "" {
 		return offset
 	}
-	offset += fastpb.WriteString(buf[offset:], 3, x.GetContent())
+	offset += fastpb.WriteString(buf[offset:], 3, x.Content)
 	return offset
 }
 
 func (x *Comment) fastWriteField4(buf []byte) (offset int) {
-	if x.CreateTime == 0 {
+	if x.CreateDate == "" {
 		return offset
 	}
-	offset += fastpb.WriteInt64(buf[offset:], 4, x.GetCreateTime())
+	offset += fastpb.WriteString(buf[offset:], 4, x.CreateDate)
 	return offset
 }
 
@@ -342,7 +342,7 @@ func (x *Comment) fastWriteField5(buf []byte) (offset int) {
 	if x.LikeCount == 0 {
 		return offset
 	}
-	offset += fastpb.WriteInt64(buf[offset:], 5, x.GetLikeCount())
+	offset += fastpb.WriteInt64(buf[offset:], 5, x.LikeCount)
 	return offset
 }
 
@@ -350,7 +350,7 @@ func (x *Comment) fastWriteField6(buf []byte) (offset int) {
 	if x.TeaseCount == 0 {
 		return offset
 	}
-	offset += fastpb.WriteInt64(buf[offset:], 6, x.GetTeaseCount())
+	offset += fastpb.WriteInt64(buf[offset:], 6, x.TeaseCount)
 	return offset
 }
 
@@ -370,7 +370,7 @@ func (x *CommentActionRequest) fastWriteField1(buf []byte) (offset int) {
 	if x.Token == "" {
 		return offset
 	}
-	offset += fastpb.WriteString(buf[offset:], 1, x.GetToken())
+	offset += fastpb.WriteString(buf[offset:], 1, x.Token)
 	return offset
 }
 
@@ -378,7 +378,7 @@ func (x *CommentActionRequest) fastWriteField2(buf []byte) (offset int) {
 	if x.VideoId == 0 {
 		return offset
 	}
-	offset += fastpb.WriteInt64(buf[offset:], 2, x.GetVideoId())
+	offset += fastpb.WriteInt64(buf[offset:], 2, x.VideoId)
 	return offset
 }
 
@@ -386,7 +386,7 @@ func (x *CommentActionRequest) fastWriteField3(buf []byte) (offset int) {
 	if x.ActionType == 0 {
 		return offset
 	}
-	offset += fastpb.WriteInt32(buf[offset:], 3, x.GetActionType())
+	offset += fastpb.WriteInt32(buf[offset:], 3, x.ActionType)
 	return offset
 }
 
@@ -394,7 +394,7 @@ func (x *CommentActionRequest) fastWriteField4(buf []byte) (offset int) {
 	if x.CommentText == "" {
 		return offset
 	}
-	offset += fastpb.WriteString(buf[offset:], 4, x.GetCommentText())
+	offset += fastpb.WriteString(buf[offset:], 4, x.CommentText)
 	return offset
 }
 
@@ -402,7 +402,7 @@ func (x *CommentActionRequest) fastWriteField5(buf []byte) (offset int) {
 	if x.CommentId == 0 {
 		return offset
 	}
-	offset += fastpb.WriteInt64(buf[offset:], 5, x.GetCommentId())
+	offset += fastpb.WriteInt64(buf[offset:], 5, x.CommentId)
 	return offset
 }
 
@@ -420,7 +420,7 @@ func (x *CommentActionResponse) fastWriteField1(buf []byte) (offset int) {
 	if x.StatusCode == 0 {
 		return offset
 	}
-	offset += fastpb.WriteInt32(buf[offset:], 1, x.GetStatusCode())
+	offset += fastpb.WriteInt32(buf[offset:], 1, x.StatusCode)
 	return offset
 }
 
@@ -428,7 +428,7 @@ func (x *CommentActionResponse) fastWriteField2(buf []byte) (offset int) {
 	if x.StatusMsg == "" {
 		return offset
 	}
-	offset += fastpb.WriteString(buf[offset:], 2, x.GetStatusMsg())
+	offset += fastpb.WriteString(buf[offset:], 2, x.StatusMsg)
 	return offset
 }
 
@@ -436,7 +436,7 @@ func (x *CommentActionResponse) fastWriteField3(buf []byte) (offset int) {
 	if x.Comment == nil {
 		return offset
 	}
-	offset += fastpb.WriteMessage(buf[offset:], 3, x.GetComment())
+	offset += fastpb.WriteMessage(buf[offset:], 3, x.Comment)
 	return offset
 }
 
@@ -453,7 +453,7 @@ func (x *CommentListRequest) fastWriteField1(buf []byte) (offset int) {
 	if x.Token == "" {
 		return offset
 	}
-	offset += fastpb.WriteString(buf[offset:], 1, x.GetToken())
+	offset += fastpb.WriteString(buf[offset:], 1, x.Token)
 	return offset
 }
 
@@ -461,7 +461,7 @@ func (x *CommentListRequest) fastWriteField2(buf []byte) (offset int) {
 	if x.VideoId == 0 {
 		return offset
 	}
-	offset += fastpb.WriteInt64(buf[offset:], 2, x.GetVideoId())
+	offset += fastpb.WriteInt64(buf[offset:], 2, x.VideoId)
 	return offset
 }
 
@@ -479,7 +479,7 @@ func (x *CommentListResponse) fastWriteField1(buf []byte) (offset int) {
 	if x.StatusCode == 0 {
 		return offset
 	}
-	offset += fastpb.WriteInt32(buf[offset:], 1, x.GetStatusCode())
+	offset += fastpb.WriteInt32(buf[offset:], 1, x.StatusCode)
 	return offset
 }
 
@@ -487,7 +487,7 @@ func (x *CommentListResponse) fastWriteField2(buf []byte) (offset int) {
 	if x.StatusMsg == "" {
 		return offset
 	}
-	offset += fastpb.WriteString(buf[offset:], 2, x.GetStatusMsg())
+	offset += fastpb.WriteString(buf[offset:], 2, x.StatusMsg)
 	return offset
 }
 
@@ -495,8 +495,8 @@ func (x *CommentListResponse) fastWriteField3(buf []byte) (offset int) {
 	if x.CommentList == nil {
 		return offset
 	}
-	for i := range x.GetCommentList() {
-		offset += fastpb.WriteMessage(buf[offset:], 3, x.GetCommentList()[i])
+	for i := range x.CommentList {
+		offset += fastpb.WriteMessage(buf[offset:], 3, x.CommentList[i])
 	}
 	return offset
 }
@@ -515,10 +515,10 @@ func (x *Comment) Size() (n int) {
 }
 
 func (x *Comment) sizeField1() (n int) {
-	if x.CommentId == 0 {
+	if x.Id == 0 {
 		return n
 	}
-	n += fastpb.SizeInt64(1, x.GetCommentId())
+	n += fastpb.SizeInt64(1, x.Id)
 	return n
 }
 
@@ -526,7 +526,7 @@ func (x *Comment) sizeField2() (n int) {
 	if x.User == nil {
 		return n
 	}
-	n += fastpb.SizeMessage(2, x.GetUser())
+	n += fastpb.SizeMessage(2, x.User)
 	return n
 }
 
@@ -534,15 +534,15 @@ func (x *Comment) sizeField3() (n int) {
 	if x.Content == "" {
 		return n
 	}
-	n += fastpb.SizeString(3, x.GetContent())
+	n += fastpb.SizeString(3, x.Content)
 	return n
 }
 
 func (x *Comment) sizeField4() (n int) {
-	if x.CreateTime == 0 {
+	if x.CreateDate == "" {
 		return n
 	}
-	n += fastpb.SizeInt64(4, x.GetCreateTime())
+	n += fastpb.SizeString(4, x.CreateDate)
 	return n
 }
 
@@ -550,7 +550,7 @@ func (x *Comment) sizeField5() (n int) {
 	if x.LikeCount == 0 {
 		return n
 	}
-	n += fastpb.SizeInt64(5, x.GetLikeCount())
+	n += fastpb.SizeInt64(5, x.LikeCount)
 	return n
 }
 
@@ -558,7 +558,7 @@ func (x *Comment) sizeField6() (n int) {
 	if x.TeaseCount == 0 {
 		return n
 	}
-	n += fastpb.SizeInt64(6, x.GetTeaseCount())
+	n += fastpb.SizeInt64(6, x.TeaseCount)
 	return n
 }
 
@@ -578,7 +578,7 @@ func (x *CommentActionRequest) sizeField1() (n int) {
 	if x.Token == "" {
 		return n
 	}
-	n += fastpb.SizeString(1, x.GetToken())
+	n += fastpb.SizeString(1, x.Token)
 	return n
 }
 
@@ -586,7 +586,7 @@ func (x *CommentActionRequest) sizeField2() (n int) {
 	if x.VideoId == 0 {
 		return n
 	}
-	n += fastpb.SizeInt64(2, x.GetVideoId())
+	n += fastpb.SizeInt64(2, x.VideoId)
 	return n
 }
 
@@ -594,7 +594,7 @@ func (x *CommentActionRequest) sizeField3() (n int) {
 	if x.ActionType == 0 {
 		return n
 	}
-	n += fastpb.SizeInt32(3, x.GetActionType())
+	n += fastpb.SizeInt32(3, x.ActionType)
 	return n
 }
 
@@ -602,7 +602,7 @@ func (x *CommentActionRequest) sizeField4() (n int) {
 	if x.CommentText == "" {
 		return n
 	}
-	n += fastpb.SizeString(4, x.GetCommentText())
+	n += fastpb.SizeString(4, x.CommentText)
 	return n
 }
 
@@ -610,7 +610,7 @@ func (x *CommentActionRequest) sizeField5() (n int) {
 	if x.CommentId == 0 {
 		return n
 	}
-	n += fastpb.SizeInt64(5, x.GetCommentId())
+	n += fastpb.SizeInt64(5, x.CommentId)
 	return n
 }
 
@@ -628,7 +628,7 @@ func (x *CommentActionResponse) sizeField1() (n int) {
 	if x.StatusCode == 0 {
 		return n
 	}
-	n += fastpb.SizeInt32(1, x.GetStatusCode())
+	n += fastpb.SizeInt32(1, x.StatusCode)
 	return n
 }
 
@@ -636,7 +636,7 @@ func (x *CommentActionResponse) sizeField2() (n int) {
 	if x.StatusMsg == "" {
 		return n
 	}
-	n += fastpb.SizeString(2, x.GetStatusMsg())
+	n += fastpb.SizeString(2, x.StatusMsg)
 	return n
 }
 
@@ -644,7 +644,7 @@ func (x *CommentActionResponse) sizeField3() (n int) {
 	if x.Comment == nil {
 		return n
 	}
-	n += fastpb.SizeMessage(3, x.GetComment())
+	n += fastpb.SizeMessage(3, x.Comment)
 	return n
 }
 
@@ -661,7 +661,7 @@ func (x *CommentListRequest) sizeField1() (n int) {
 	if x.Token == "" {
 		return n
 	}
-	n += fastpb.SizeString(1, x.GetToken())
+	n += fastpb.SizeString(1, x.Token)
 	return n
 }
 
@@ -669,7 +669,7 @@ func (x *CommentListRequest) sizeField2() (n int) {
 	if x.VideoId == 0 {
 		return n
 	}
-	n += fastpb.SizeInt64(2, x.GetVideoId())
+	n += fastpb.SizeInt64(2, x.VideoId)
 	return n
 }
 
@@ -687,7 +687,7 @@ func (x *CommentListResponse) sizeField1() (n int) {
 	if x.StatusCode == 0 {
 		return n
 	}
-	n += fastpb.SizeInt32(1, x.GetStatusCode())
+	n += fastpb.SizeInt32(1, x.StatusCode)
 	return n
 }
 
@@ -695,7 +695,7 @@ func (x *CommentListResponse) sizeField2() (n int) {
 	if x.StatusMsg == "" {
 		return n
 	}
-	n += fastpb.SizeString(2, x.GetStatusMsg())
+	n += fastpb.SizeString(2, x.StatusMsg)
 	return n
 }
 
@@ -703,17 +703,17 @@ func (x *CommentListResponse) sizeField3() (n int) {
 	if x.CommentList == nil {
 		return n
 	}
-	for i := range x.GetCommentList() {
-		n += fastpb.SizeMessage(3, x.GetCommentList()[i])
+	for i := range x.CommentList {
+		n += fastpb.SizeMessage(3, x.CommentList[i])
 	}
 	return n
 }
 
 var fieldIDToName_Comment = map[int32]string{
-	1: "CommentId",
+	1: "Id",
 	2: "User",
 	3: "Content",
-	4: "CreateTime",
+	4: "CreateDate",
 	5: "LikeCount",
 	6: "TeaseCount",
 }

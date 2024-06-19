@@ -3,6 +3,9 @@ package service
 import (
 	"context"
 	"encoding/json"
+	"strings"
+	"time"
+
 	"github.com/ulyssesorz/douyin/dal/db"
 	"github.com/ulyssesorz/douyin/dal/redis"
 	"github.com/ulyssesorz/douyin/internal/tool"
@@ -11,8 +14,6 @@ import (
 	"github.com/ulyssesorz/douyin/pkg/minio"
 	"github.com/ulyssesorz/douyin/pkg/rabbitmq"
 	"github.com/ulyssesorz/douyin/pkg/zap"
-	"strings"
-	"time"
 )
 
 // RelationServiceImpl implements the last service interface defined in the IDL.

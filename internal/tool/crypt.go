@@ -50,6 +50,18 @@ func RsaEncrypt(originData []byte, publicKey string) ([]byte, error) {
 	return rsa.EncryptPKCS1v15(rand.Reader, pub, originData)
 }
 
+func RsaDecrypt(ciphertext []byte, privateKey string) ([]byte, error) {
+	block, _ := pem.Decode([]byte(privateKey))
+	if block == nil {
+		return nil, errors.New("private key error")
+	}
+	priv, err := x509.ParsePKCS8PrivateKey(block.Bytes)
+	if err != nil {
+		return nil, err
+	}
+	return rsa.DecryptPKCS1v15(rand.Reader, priv.(*rsa.PrivateKey), ciphertext)
+}
+
 func Sha256Encrypt(data string, salt string) string {
 	sha256Ctx := sha256.New()
 	sha256Ctx.Write([]byte(data + salt))

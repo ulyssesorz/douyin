@@ -3,6 +3,8 @@ package minio
 import (
 	"context"
 	"errors"
+	"io"
+	"time"
 
 	"github.com/minio/minio-go/v7"
 )
@@ -28,9 +30,9 @@ func UploadFileByPath(bucketName, objectName, path, contentType string) (int64, 
 		return -1, errors.New("invalid argument")
 	}
 
-	uploadInfo, err := minioClient.FPutObject(context.Background, bucketName, objectName, path, minio.PutObjectOptions){
+	uploadInfo, err := minioClient.FPutObject(context.Background(), bucketName, objectName, path, minio.PutObjectOptions{
 		ContentType: contentType,
-	}
+	})
 	if err != nil {
 		return -1, err
 	}

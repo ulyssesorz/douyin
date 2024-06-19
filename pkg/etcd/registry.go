@@ -8,6 +8,8 @@ import (
 	"strconv"
 	"time"
 
+	"github.com/cloudwego/kitex/pkg/registry"
+
 	"github.com/ulyssesorz/douyin/pkg/zap"
 	clientv3 "go.etcd.io/etcd/client/v3"
 )
@@ -33,7 +35,7 @@ func NewEtcdRegistry(endpoints []string) (registry.Registry, error) {
 	return NewEtcdRegistryWithAuth(endpoints, "", "")
 }
 
-func NewEtcdRegistryWithAuth(endpoints []string, username, password str) (registry.Register, error) {
+func NewEtcdRegistryWithAuth(endpoints []string, username, password string) (registry.Registry, error) {
 	etcdClient, err := clientv3.New(clientv3.Config{
 		Endpoints: endpoints,
 		Username:  username,

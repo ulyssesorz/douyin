@@ -5,9 +5,10 @@ import (
 )
 
 var (
-	Jwt *jwt.Jwt
+	Jwt *jwt.JWT
 )
 
-func init(signingKey string) {
+
+func Init(signingKey string) {
 	Jwt = jwt.NewJWT([]byte(signingKey))
 }

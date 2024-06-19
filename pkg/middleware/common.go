@@ -7,7 +7,7 @@ import (
 	"github.com/cloudwego/kitex/pkg/endpoint"
 	"github.com/cloudwego/kitex/pkg/rpcinfo"
 	"github.com/gin-gonic/gin"
-	"github.com/ulyssesorz/douyin/pkg/zap"
+	z "github.com/ulyssesorz/douyin/pkg/zap"
 	"go.uber.org/zap"
 )
 
@@ -17,7 +17,7 @@ var (
 )
 
 func init() {
-	logger = zap.InitLogger()
+	logger = z.InitLogger()
 	defer logger.Sync()
 }
 

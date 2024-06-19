@@ -5,6 +5,7 @@ import (
 	"time"
 
 	"github.com/ulyssesorz/douyin/pkg/viper"
+	"github.com/ulyssesorz/douyin/pkg/zap"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
@@ -59,6 +60,9 @@ func init() {
 		zapLogger.Fatalln(err.Error())
 	}
 	db, err := _db.DB()
+	if err != nil {
+		zapLogger.Fatalln(err.Error())
+	}
 	db.SetMaxOpenConns(1000)
 	db.SetMaxIdleConns(20)
 	db.SetConnMaxLifetime(60 * time.Minute)

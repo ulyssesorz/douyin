@@ -2,13 +2,13 @@ package service
 
 import (
 	"context"
+	"fmt"
 	"math/rand"
 	"time"
-	"fmt"
 
-	"github.com/ulyssesorz/douyin/kitex/kitex_gen/user"
 	"github.com/ulyssesorz/douyin/dal/db"
 	"github.com/ulyssesorz/douyin/internal/tool"
+	"github.com/ulyssesorz/douyin/kitex/kitex_gen/user"
 	"github.com/ulyssesorz/douyin/pkg/jwt"
 	"github.com/ulyssesorz/douyin/pkg/minio"
 	"github.com/ulyssesorz/douyin/pkg/zap"
@@ -16,11 +16,11 @@ import (
 
 type UserServiceImpl struct {}
 
-func (s *UserServiceImpl) Register(ctx context.Context, req *user.UserRegisterRequest) (resp *user.UserRegisterResponse) {
+func (s *UserServiceImpl) Register(ctx context.Context, req *user.UserRegisterRequest) (resp *user.UserRegisterResponse, err error) {
 	logger := zap.InitLogger()
 
 	// 查询用户是否已存在
-	usr, err := db.GetUserByID(ctx, req.Username)
+	usr, err := db.GetUserByName(ctx, req.Username)
 	if err != nil {
 		logger.Errorln(err.Error())
 		res := &user.UserRegisterResponse{
@@ -41,7 +41,7 @@ func (s *UserServiceImpl) Register(ctx context.Context, req *user.UserRegisterRe
 	rand.Seed(time.Now().UnixMilli())
 	usr = &db.User{
 		UserName: req.Username,
-		Password: tool.Md5Encrypt(req.password)
+		Password: tool.Md5Encrypt(req.Password),
 		Avatar: fmt.Sprintf("default%d.png", rand.Intn(10)),
 	}
 	if err := db.CreateUser(ctx, usr); err != nil {
@@ -53,8 +53,8 @@ func (s *UserServiceImpl) Register(ctx context.Context, req *user.UserRegisterRe
 		return res, nil	
 	}
 
-	claims := jwt.CustomClaims(Id: int64(usr.ID))
-	claims.ExpiresAt = time.Now().Add(time.Minute * 5).Unix
+	claims := jwt.CustomClaims{Id: int64(usr.ID)}
+	claims.ExpiresAt = time.Now().Add(time.Minute * 5).Unix()
 	token, err := Jwt.CreateToken(claims)
 	if err != nil {
 		logger.Errorf("发生错误：%v", err.Error())
@@ -93,7 +93,7 @@ func (s *UserServiceImpl) Login(ctx context.Context, req *user.UserLoginRequest)
 	}	
 
 	// 比较密码
-	if tool.Md5Encrypt(req.password) != usr.Password {
+	if tool.Md5Encrypt(req.Password) != usr.Password {
 		logger.Errorln("用户名或密码错误")
 		res := &user.UserLoginResponse{
 			StatusCode: -1,
@@ -146,7 +146,7 @@ func (s *UserServiceImpl) UserInfo(ctx context.Context, req *user.UserInfoReques
 		return res, nil
 	}
 
-	avatar, err := minino.GetFileTemporaryURL(minino.AvatarBucketName, usr.Avatar)
+	avatar, err := minio.GetFileTemporaryURL(minio.AvatarBucketName, usr.Avatar)
 	if err != nil {
 		logger.Errorf("Minio获取头像失败：%v", err.Error())
 		res := &user.UserInfoResponse{
@@ -165,7 +165,7 @@ func (s *UserServiceImpl) UserInfo(ctx context.Context, req *user.UserInfoReques
 		return res, nil
 	}
 
-	res := &uer.UserInfoResponse{
+	res := &user.UserInfoResponse{
 		StatusCode: 0,
 		StatusMsg:  "success",
 		User: &user.User{

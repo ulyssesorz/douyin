@@ -5,6 +5,7 @@ import (
 
 	amqp "github.com/rabbitmq/amqp091-go"
 	"github.com/ulyssesorz/douyin/pkg/viper"
+	z "github.com/ulyssesorz/douyin/pkg/zap"
 	"go.uber.org/zap"
 )
 
@@ -23,7 +24,7 @@ var (
 )
 
 func init() {
-	logger = zap.InitLogger()
+	logger = z.InitLogger()
 }
 
 func failOnError(err error, msg string) {
