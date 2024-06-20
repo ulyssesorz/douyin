@@ -9,6 +9,7 @@ import (
 
 type User struct {
 	gorm.Model
+	ID 				uint64	`gorm:"primarykey"`
 	UserName        string  `gorm:"index:idx_username,unique;type:varchar(40);not null" json:"name,omitempty"`
 	Password        string  `gorm:"type:varchar(256);not null" json:"password,omitempty"`
 	FavoriteVideos  []Video `gorm:"many2many:user_favorite_videos" json:"favorite_videos,omitempty"`

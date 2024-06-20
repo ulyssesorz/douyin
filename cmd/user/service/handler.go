@@ -11,6 +11,7 @@ import (
 	"github.com/ulyssesorz/douyin/kitex/kitex_gen/user"
 	"github.com/ulyssesorz/douyin/pkg/jwt"
 	"github.com/ulyssesorz/douyin/pkg/minio"
+	"github.com/ulyssesorz/douyin/pkg/snowflake"
 	"github.com/ulyssesorz/douyin/pkg/zap"
 )
 
@@ -40,6 +41,7 @@ func (s *UserServiceImpl) Register(ctx context.Context, req *user.UserRegisterRe
 	// 创建用户
 	rand.Seed(time.Now().UnixMilli())
 	usr = &db.User{
+		ID: snowflake.GetID(),
 		UserName: req.Username,
 		Password: tool.Md5Encrypt(req.Password),
 		Avatar: fmt.Sprintf("default%d.png", rand.Intn(10)),
@@ -138,7 +140,7 @@ func (s *UserServiceImpl) UserInfo(ctx context.Context, req *user.UserInfoReques
 		}
 		return res, nil
 	} else if usr == nil {
-		logger.Errorf("该用户不存在：%v", err.Error())
+		logger.Errorf("该用户不存在")
 		res := &user.UserInfoResponse{
 			StatusCode: -1,
 			StatusMsg:  "该用户不存在",
