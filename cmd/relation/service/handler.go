@@ -16,10 +16,8 @@ import (
 	"github.com/ulyssesorz/douyin/pkg/zap"
 )
 
-// RelationServiceImpl implements the last service interface defined in the IDL.
 type RelationServiceImpl struct{}
 
-// RelationAction implements the RelationServiceImpl interface.
 func (s *RelationServiceImpl) RelationAction(ctx context.Context, req *relation.RelationActionRequest) (resp *relation.RelationActionResponse, err error) {
 	logger := zap.InitLogger()
 	// 解析token,获取用户id
@@ -98,7 +96,6 @@ func (s *RelationServiceImpl) RelationAction(ctx context.Context, req *relation.
 	return res, nil
 }
 
-// RelationFollowList implements the RelationServiceImpl interface.
 func (s *RelationServiceImpl) RelationFollowList(ctx context.Context, req *relation.RelationFollowListRequest) (resp *relation.RelationFollowListResponse, err error) {
 	logger := zap.InitLogger()
 	userID := req.UserId
@@ -189,7 +186,6 @@ func (s *RelationServiceImpl) RelationFollowList(ctx context.Context, req *relat
 	return res, nil
 }
 
-// RelationFollowerList implements the RelationServiceImpl interface.
 func (s *RelationServiceImpl) RelationFollowerList(ctx context.Context, req *relation.RelationFollowerListRequest) (resp *relation.RelationFollowerListResponse, err error) {
 	logger := zap.InitLogger()
 	userID := req.UserId
@@ -290,7 +286,6 @@ func (s *RelationServiceImpl) RelationFollowerList(ctx context.Context, req *rel
 	return res, nil
 }
 
-// RelationFriendList implements the RelationServiceImpl interface.
 func (s *RelationServiceImpl) RelationFriendList(ctx context.Context, req *relation.RelationFriendListRequest) (resp *relation.RelationFriendListResponse, err error) {
 	logger := zap.InitLogger()
 	userID := req.UserId
@@ -339,6 +334,7 @@ func (s *RelationServiceImpl) RelationFriendList(ctx context.Context, req *relat
 	}
 	userList := make([]*relation.FriendUser, 0)
 	for _, u := range users {
+		// 获取最新一条消息用于聊天窗展示摘要
 		message, err := db.GetFriendLatestMessage(ctx, userID, int64(u.ID))
 		if err != nil {
 			res := &relation.RelationFriendListResponse{

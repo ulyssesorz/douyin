@@ -152,7 +152,7 @@ func (s *CommentServiceImpl) CommentList(ctx context.Context, req *comment.Comme
 			}
 			return res, nil
 		}
-		_, err = db.GetRelationByUserIDs(ctx, userID, int64(u.ID))
+		relation, err := db.GetRelationByUserIDs(ctx, userID, int64(u.ID))
 		if err != nil {
 			logger.Errorln(err.Error())
 			res := &comment.CommentListResponse{
@@ -184,7 +184,7 @@ func (s *CommentServiceImpl) CommentList(ctx context.Context, req *comment.Comme
 			Name:            u.UserName,
 			FollowCount:     int64(u.FollowingCount),
 			FollowerCount:   int64(u.FollowerCount),
-			IsFollow:        err != gorm.ErrRecordNotFound,
+			IsFollow:        relation != nil,
 			Avatar:          avatar,
 			BackgroundImage: backgroundUrl,
 			Signature:       u.Signature,

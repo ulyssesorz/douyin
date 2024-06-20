@@ -17,13 +17,10 @@ import (
 	"github.com/ulyssesorz/douyin/pkg/zap"
 )
 
-// FavoriteServiceImpl implements the last service interface defined in the IDL.
 type FavoriteServiceImpl struct{}
 
-// FavoriteAction implements the FavoriteServiceImpl interface.
 func (s *FavoriteServiceImpl) FavoriteAction(ctx context.Context, req *favorite.FavoriteActionRequest) (resp *favorite.FavoriteActionResponse, err error) {
 	logger := zap.InitLogger()
-	// 解析token,获取用户id
 	claims, err := Jwt.ParseToken(req.Token)
 	if err != nil {
 		logger.Errorf("token解析错误：%v", err.Error())
@@ -35,7 +32,7 @@ func (s *FavoriteServiceImpl) FavoriteAction(ctx context.Context, req *favorite.
 	}
 	userID := claims.Id
 
-	//将点赞信息存入消息队列,成功存入则表示点赞成功,后续处理由redis完成
+	// 将点赞信息存入消息队列,成功存入则表示点赞成功,后续处理由redis完成
 	fc := &redis.FavoriteCache{
 		VideoID:    uint(req.VideoId),
 		UserID:     uint(userID),
@@ -71,11 +68,10 @@ func (s *FavoriteServiceImpl) FavoriteAction(ctx context.Context, req *favorite.
 	return res, nil
 }
 
-// FavoriteList implements the FavoriteServiceImpl interface.
 func (s *FavoriteServiceImpl) FavoriteList(ctx context.Context, req *favorite.FavoriteListRequest) (resp *favorite.FavoriteListResponse, err error) {
 	userID := req.UserId
 
-	// 从数据库获取喜欢列表
+	// 从数据库获取点赞列表
 	results, err := db.GetFavoriteListByUserID(ctx, userID)
 	if err != nil {
 		logger.Errorf("获取喜欢列表错误：%v", err.Error())

@@ -13,12 +13,10 @@ import (
 	"github.com/ulyssesorz/douyin/pkg/zap"
 )
 
-// VideoServiceImpl implements the last service interface defined in the IDL.
 type VideoServiceImpl struct{}
 
 const limit = 30
 
-// Feed implements the VideoServiceImpl interface.
 func (s *VideoServiceImpl) Feed(ctx context.Context, req *video.FeedRequest) (resp *video.FeedResponse, err error) {
 	logger := zap.InitLogger()
 	nextTime := time.Now().UnixMilli()
@@ -144,7 +142,6 @@ func (s *VideoServiceImpl) Feed(ctx context.Context, req *video.FeedRequest) (re
 	return res, nil
 }
 
-// PublishAction implements the VideoServiceImpl interface.
 func (s *VideoServiceImpl) PublishAction(ctx context.Context, req *video.PublishActionRequest) (resp *video.PublishActionResponse, err error) {
 	logger := zap.InitLogger()
 	// 解析token,获取用户id
@@ -210,10 +207,6 @@ func (s *VideoServiceImpl) PublishAction(ctx context.Context, req *video.Publish
 			}
 		}
 	}()
-	//async.Exec(func() interface{} {
-	//	return VideoPublish(ctx, req.Data, videoTitle, coverTitle, int64(v.ID), userID)
-	//})
-	//future.Await()
 
 	res := &video.PublishActionResponse{
 		StatusCode: 0,
@@ -222,7 +215,6 @@ func (s *VideoServiceImpl) PublishAction(ctx context.Context, req *video.Publish
 	return res, nil
 }
 
-// PublishList implements the VideoServiceImpl interface.
 func (s *VideoServiceImpl) PublishList(ctx context.Context, req *video.PublishListRequest) (resp *video.PublishListResponse, err error) {
 	logger := zap.InitLogger()
 	userID := req.UserId
